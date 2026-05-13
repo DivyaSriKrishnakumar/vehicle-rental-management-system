@@ -5,8 +5,10 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import jakarta.validation.Valid;
 
 @RestController
 public class AuthController {
@@ -24,40 +26,38 @@ public class AuthController {
 	private PasswordEncoder passwordEncoder;
 	
 	@PostMapping("/register")
-	public String register(@RequestParam String username,
-	                       @RequestParam String password,
-	                       @RequestParam String role) {
+	public String register(@Valid @RequestBody AppUser user) {
 
-	    if (userRepository.findByUsername(username).isPresent()) {
-	        return "User already exists";
-	    }
+		// check existing user
+        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
+            return "User already exists";
+        }
 
-	    AppUser user = new AppUser();
-	    user.setUsername(username);
+        // encode password
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-	    // encode password before saving
-	    user.setPassword(passwordEncoder.encode(password));
+        // default role
+        if (user.getRole() == null || user.getRole().trim().isEmpty()) {
+            user.setRole("USER");
+        }
 
-	    user.setRole(role);
+        userRepository.save(user);
 
-	    userRepository.save(user);
-
-	    return "User registered successfully";
+        return "User registered successfully";
 	}	 
 	
 	@PostMapping("/login")
-	public String login(@RequestParam String username,
-            @RequestParam String password) {
-        //String token =  null;
+	public String login(@RequestBody AppUser loginRequest) {
 		authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(username, password));
+                new UsernamePasswordAuthenticationToken(
+                        loginRequest.getUsername(),
+                        loginRequest.getPassword()
+                )
+        );
 
-		// if authentication succeeds → generate token
-		AppUser user = userRepository.findByUsername(username)
-				.orElseThrow(() -> new RuntimeException("User not found"));
+        AppUser user = userRepository.findByUsername(loginRequest.getUsername())
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
-		return jwtUtil.generateToken(user.getUsername(), user.getRole());
-		
-	
+        return jwtUtil.generateToken(user.getUsername(), user.getRole());
 	}
 }

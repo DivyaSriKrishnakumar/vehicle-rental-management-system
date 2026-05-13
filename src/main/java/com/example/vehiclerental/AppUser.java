@@ -7,7 +7,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -20,15 +19,15 @@ public class AppUser {
 	
 	@NotBlank(message = "Username is required")
 	@Size(min = 3, max = 50)
-	@Column(nullable = false)
+	@Column(nullable = false, unique=true)
 	private String username;
 	
 	@NotBlank(message = "Password is required")
-	@Size(min = 6)
+	@Size(min = 6, message = "Password must be at least 6 characters")
 	@Column(nullable = false)
 	private String password;
 	
-	@NotNull(message = "Role must be provided")
+	@NotBlank(message = "Role is required")
     @Column(nullable = false)
 	private String role;
 	

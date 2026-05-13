@@ -83,7 +83,7 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<String> handleJsonError(HttpMessageNotReadableException ex) {
 	    return ResponseEntity
 	            .badRequest()
-	            .body("Invalid JSON. 'available' must be true or false.");
+	            .body("Invalid JSON: " + ex.getMostSpecificCause().getMessage());
 	}
 	
 	
