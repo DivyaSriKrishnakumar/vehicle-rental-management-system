@@ -1,67 +1,90 @@
-Vehicle Rental Management System
-Overview
-Vehicle Rental Management System is a secure REST API backend application developed using Spring Boot. The project manages vehicles, users, and rental bookings with authentication, role-based authorization, booking conflict validation, DTO architecture, pagination, Swagger API documentation, and global exception handling.
-This project was designed as a portfolio-quality backend system following layered architecture and production-style API design principles.
- 
-Features
-Authentication & Authorization
-JWT Authentication
-Spring Security integration
-Stateless authentication
-USER and ADMIN roles
-Protected APIs
-Role-based access control
-Custom AccessDenied handling
-Secure booking ownership validation
- 
-Vehicle Management
-Add new vehicles
-Update vehicle information
-Delete vehicles
-Get vehicle by ID
-Get all vehicles
-Vehicle availability management
-Pagination support
-DTO-based request/response handling
-Validation support
- 
-Booking Management
-Create booking
-Cancel booking
-Booking history API
-User-specific booking retrieval
-Admin access to all bookings
-Booking overlap conflict prevention
-Vehicle maintenance availability checks
-Booking status tracking
- 
-Tech Stack
-Technology
-Purpose
-Java 17
-Programming Language
-Spring Boot
-Backend Framework
-Spring Security
-Authentication & Authorization
-JWT
-Token-based Authentication
-Spring Data JPA
-Database Access
-Hibernate
-ORM
-H2 Database
-Development Database
-Maven
-Dependency Management
-Swagger/OpenAPI
-API Documentation
-Postman
-API Testing
+# Vehicle Rental Management System
 
- 
-Architecture
+## Overview
+
+Vehicle Rental Management System is a secure REST API backend application developed using Spring Boot.
+
+The project manages:
+
+- Vehicles
+- Users
+- Rental Bookings
+- JWT Authentication
+- Role-Based Authorization
+- Booking Conflict Validation
+- DTO Architecture
+- Pagination
+- Swagger API Documentation
+- Global Exception Handling
+
+This project was designed as a portfolio-quality backend system following layered architecture and production-style REST API design principles.
+
+---
+
+# Features
+
+## Authentication & Authorization
+
+- JWT Authentication
+- Spring Security Integration
+- Stateless Authentication
+- USER and ADMIN Roles
+- Protected APIs
+- Role-Based Access Control
+- Custom AccessDenied Handling
+- Secure Booking Ownership Validation
+
+---
+
+## Vehicle Management
+
+- Add New Vehicles
+- Update Vehicle Information
+- Delete Vehicles
+- Get Vehicle By ID
+- Get All Vehicles
+- Vehicle Availability Management
+- Pagination Support
+- DTO-Based Request/Response Handling
+- Validation Support
+
+---
+
+## Booking Management
+
+- Create Booking
+- Cancel Booking
+- Booking History API
+- User-Specific Booking Retrieval
+- Admin Access To All Bookings
+- Booking Overlap Conflict Prevention
+- Vehicle Maintenance Availability Checks
+- Booking Status Tracking
+
+---
+
+# Tech Stack
+
+| Technology | Purpose |
+|---|---|
+| Java 17 | Programming Language |
+| Spring Boot | Backend Framework |
+| Spring Security | Authentication & Authorization |
+| JWT | Token-Based Authentication |
+| Spring Data JPA | Database Access |
+| Hibernate | ORM |
+| H2 Database | Development Database |
+| Maven | Dependency Management |
+| Swagger/OpenAPI | API Documentation |
+| Postman | API Testing |
+
+---
+
+# Architecture
+
 The project follows layered architecture:
+
+```text
 Controller Layer
 ↓
 Service Layer
@@ -69,318 +92,551 @@ Service Layer
 Repository Layer
 ↓
 Database
- 
-Project Structure
+```
+
+---
+
+# Project Structure
+
+```text
 src/main/java
 │
 ├── controller
-│ ├── AuthController
-│ ├── VehicleController
-│ └── BookingController
+│   ├── AuthController
+│   ├── VehicleController
+│   └── BookingController
 │
 ├── service
-│ ├── VehicleService
-│ ├── BookingService
-│ └── impl
-│ ├── VehicleServiceImpl
-│ └── BookingServiceImpl
+│   ├── VehicleService
+│   ├── BookingService
+│   └── impl
+│       ├── VehicleServiceImpl
+│       └── BookingServiceImpl
 │
 ├── repository
-│ ├── VehicleRepository
-│ ├── BookingRepository
-│ └── UserRepository
+│   ├── VehicleRepository
+│   ├── BookingRepository
+│   └── UserRepository
 │
 ├── entity
-│ ├── Vehicle
-│ ├── Booking
-│ └── AppUser
+│   ├── Vehicle
+│   ├── Booking
+│   └── AppUser
 │
 ├── dto
-│ ├── VehicleRequestDTO
-│ ├── VehicleResponseDTO
-│ ├── BookingRequestDTO
-│ └── BookingResponseDTO
+│   ├── VehicleRequestDTO
+│   ├── VehicleResponseDTO
+│   ├── BookingRequestDTO
+│   └── BookingResponseDTO
 │
 ├── security
-│ ├── JwtFilter
-│ ├── JwtUtil
-│ ├── SecurityConfig
-│ └── CustomAccessDeniedHandler
+│   ├── JwtFilter
+│   ├── JwtUtil
+│   ├── SecurityConfig
+│   └── CustomAccessDeniedHandler
 │
 ├── exception
-│ ├── GlobalExceptionHandler
-│ ├── ResourceNotFoundException
-│ ├── BadRequestException
-│ └── BookingAlreadyCancelledException
+│   ├── GlobalExceptionHandler
+│   ├── ResourceNotFoundException
+│   ├── BadRequestException
+│   └── BookingAlreadyCancelledException
 │
 └── enums
-└── BookingStatus
- 
-Security & Roles
-USER Role
+    └── BookingStatus
+```
+
+---
+
+# Security & Roles
+
+## USER Role
+
 A USER can:
-View vehicles
-Create bookings only for themselves
-Cancel only their own bookings
-View their own booking history
- 
-ADMIN Role
+
+- View Vehicles
+- Create Bookings Only For Themselves
+- Cancel Only Their Own Bookings
+- View Their Own Booking History
+
+---
+
+## ADMIN Role
+
 An ADMIN can:
-Add vehicles
-Update vehicles
-Delete vehicles
-Create bookings for any user
-Cancel any booking
-View all bookings
-Manage vehicle availability
- 
-Database Entities
-Vehicle Entity
+
+- Add Vehicles
+- Update Vehicles
+- Delete Vehicles
+- Create Bookings For Any User
+- Cancel Any Booking
+- View All Bookings
+- Manage Vehicle Availability
+
+---
+
+# Database Entities
+
+## Vehicle Entity
+
 Represents vehicles available for rental.
-Fields
-Field
-Type
-id
-Long
-name
-String
-type
-String
-available
-Boolean
 
- 
-Booking Entity
+### Fields
+
+| Field | Type |
+|-------|------|
+| id | Long |
+| name | String |
+| type | String |
+| available | Boolean |
+
+---
+
+## Booking Entity
+
 Represents booking transactions.
-Fields
-Field
-Type
-id
-Long
-vehicleId
-Long
-customerId
-Long
-startDate
-LocalDate
-endDate
-LocalDate
-status
-BookingStatus
 
- 
-AppUser Entity
+### Fields
+
+| Field | Type |
+|---|---|
+| id | Long |
+| vehicleId | Long |
+| customerId | Long |
+| startDate | LocalDate |
+| endDate | LocalDate |
+| status | BookingStatus |
+
+---
+
+## AppUser Entity
+
 Represents authenticated users.
-Fields
-Field
-Type
-id
-Long
-username
-String
-password
-String
-role
-String
 
- 
-DTO Architecture
+### Fields
+
+| Field | Type |
+|---|---|
+| id | Long |
+| username | String |
+| password | String |
+| role | String |
+
+---
+
+# DTO Architecture
+
 DTOs are used to separate API contracts from database entities.
-VehicleRequestDTO
+
+## VehicleRequestDTO
+
 Used when creating/updating vehicles.
-VehicleResponseDTO
+
+## VehicleResponseDTO
+
 Used when returning vehicle data.
-BookingRequestDTO
+
+## BookingRequestDTO
+
 Used for booking creation.
-BookingResponseDTO
+
+## BookingResponseDTO
+
 Used when returning booking details.
- 
-API Endpoints
-Authentication APIs
-Register User
+
+---
+
+# API Endpoints
+
+# Authentication APIs
+
+## Register User
+
+```http
 POST /auth/register
-Request Body
+```
+
+### Request Body
+
+```json
 {
-"username": "divya",
-"password": "password123",
-"role": "USER"
+  "username": "divya",
+  "password": "password123",
+  "role": "USER"
 }
- 
-Login
+```
+
+---
+
+## Login
+
+```http
 POST /auth/login
-Request Body
+```
+
+### Request Body
+
+```json
 {
-"username": "divya",
-"password": "password123"
+  "username": "divya",
+  "password": "password123"
 }
-Response
+```
+
+### Response
+
+```json
 {
-"token": "JWT_TOKEN"
+  "token": "JWT_TOKEN"
 }
- 
-Vehicle APIs
-Get All Vehicles
+```
+
+---
+
+# Vehicle APIs
+
+## Get All Vehicles
+
+```http
 GET /vehicles?page=0&size=5
-Features
-Pagination support
-DTO response
-Public access
- 
-Get Vehicle By ID
+```
+
+### Features
+
+- Pagination Support
+- DTO Response
+- Public Access
+
+---
+
+## Get Vehicle By ID
+
+```http
 GET /vehicles/{id}
- 
-Add Vehicle
+```
+
+---
+
+## Add Vehicle
+
+```http
 POST /vehicles
-ADMIN Only
-Request Body
+```
+
+### ADMIN Only
+
+### Request Body
+
+```json
 {
-"id": 101,
-"name": "Toyota Corolla",
-"type": "Sedan",
-"available": true
+  "id": 101,
+  "name": "Toyota Corolla",
+  "type": "Sedan",
+  "available": true
 }
- 
-Update Vehicle
+```
+
+---
+
+## Update Vehicle
+
+```http
 PUT /vehicles/{id}
-ADMIN Only
- 
-Delete Vehicle
+```
+
+### ADMIN Only
+
+---
+
+## Delete Vehicle
+
+```http
 DELETE /vehicles/{id}
-ADMIN Only
- 
-Booking APIs
-Create Booking
+```
+
+### ADMIN Only
+
+---
+
+# Booking APIs
+
+## Create Booking
+
+```http
 POST /bookings
-USER Rules
-USER can book only for themselves
-customerId must match logged-in user
-ADMIN Rules
-ADMIN can create bookings for any user
-Request Body
+```
+
+### USER Rules
+
+- USER can book only for themselves
+- customerId must match logged-in user
+
+### ADMIN Rules
+
+- ADMIN can create bookings for any user
+
+### Request Body
+
+```json
 {
-"vehicleId": 1,
-"customerId": 1,
-"startDate": "2026-05-20",
-"endDate": "2026-05-25"
+  "vehicleId": 1,
+  "customerId": 1,
+  "startDate": "2026-05-20",
+  "endDate": "2026-05-25"
 }
- 
-Cancel Booking
+```
+
+---
+
+## Cancel Booking
+
+```http
 PATCH /bookings/{id}/cancel
-Rules
-USER can cancel only own bookings
-ADMIN can cancel any booking
- 
-Get My Bookings
+```
+
+### Rules
+
+- USER can cancel only own bookings
+- ADMIN can cancel any booking
+
+---
+
+## Get My Bookings
+
+```http
 GET /bookings/my
+```
+
 Returns only bookings of logged-in user.
- 
-Get All Bookings
+
+---
+
+## Get All Bookings
+
+```http
 GET /bookings
-ADMIN Only
+```
+
+### ADMIN Only
+
 Returns all bookings in system.
- 
-Validation Rules
-Vehicle Validation
-Vehicle ID required
-Vehicle name cannot be blank
-Vehicle type cannot be blank
-Vehicle availability required
-Duplicate vehicle ID prevention
- 
-Booking Validation
-Start date required
-End date required
-Start date must be before end date
-Vehicle must exist
-User must exist
-Vehicle must be available
-Booking overlap prevention
-Already cancelled booking prevention
-USER ownership validation
- 
-Pagination
+
+---
+
+# Validation Rules
+
+## Vehicle Validation
+
+- Vehicle ID Required
+- Vehicle Name Cannot Be Blank
+- Vehicle Type Cannot Be Blank
+- Vehicle Availability Required
+- Duplicate Vehicle ID Prevention
+
+---
+
+## Booking Validation
+
+- Start Date Required
+- End Date Required
+- Start Date Must Be Before End Date
+- Vehicle Must Exist
+- User Must Exist
+- Vehicle Must Be Available
+- Booking Overlap Prevention
+- Already Cancelled Booking Prevention
+- USER Ownership Validation
+
+---
+
+# Pagination
+
 Vehicle APIs support pagination.
+
 Example:
+
+```http
 GET /vehicles?page=0&size=5
-Parameters
-Parameter
-Description
-page
-Page number
-size
-Number of records
+```
 
- 
-Booking Conflict Validation
+### Parameters
+
+| Parameter | Description |
+|---|---|
+| page | Page Number |
+| size | Number Of Records |
+
+---
+
+# Booking Conflict Validation
+
 The system prevents overlapping bookings.
-A vehicle cannot be booked if:
-Existing booking start date overlaps
-Existing booking end date overlaps
-Vehicle already reserved during selected period
-Implemented using custom JPQL query.
- 
-Exception Handling
-Global exception handling implemented using:
-@RestControllerAdvice
- 
-Custom Exceptions
-Exception
-Purpose
-ResourceNotFoundException
-Missing resources
-BadRequestException
-Invalid requests
-BookingAlreadyCancelledException
-Duplicate cancellation
 
- 
-Standard Eror Response
+A vehicle cannot be booked if:
+
+- Existing booking start date overlaps
+- Existing booking end date overlaps
+- Vehicle already reserved during selected period
+
+Implemented using custom JPQL query.
+
+---
+
+# Exception Handling
+
+Global exception handling implemented using:
+
+```java
+@RestControllerAdvice
+```
+
+---
+
+## Custom Exceptions
+
+| Exception | Purpose |
+|---|---|
+| ResourceNotFoundException | Missing Resources |
+| BadRequestException | Invalid Requests |
+| BookingAlreadyCancelledException | Duplicate Cancellation |
+
+---
+
+## Standard Error Response
+
+```json
 {
-"message": "Vehicle not found",
-"status": 404,
-"timestamp": "2026-05-13T10:00:00"
+  "message": "Vehicle not found",
+  "status": 404,
+  "timestamp": "2026-05-13T10:00:00"
 }
- 
-JWT Security
+```
+
+---
+
+# JWT Security
+
 Protected APIs require:
+
+```http
 Authorization: Bearer JWT_TOKEN
+```
+
 JWT token contains:
-username
-role
-expiration
- 
-Swagger/OpenAPI Documentation
+
+- username
+- role
+- expiration
+
+---
+
+# Swagger/OpenAPI Documentation
+
 Swagger UI available at:
+
+```text
 http://localhost:8080/swagger-ui/index.html
-Features:
-Interactive API testing
-JWT Authorization support
-DTO schemas
-Request/response examples
-API documentation
- 
-H2 Database Console
+```
+
+### Features
+
+- Interactive API Testing
+- JWT Authorization Support
+- DTO Schemas
+- Request/Response Examples
+- API Documentation
+
+---
+
+# H2 Database Console
+
 Available at:
+
+```text
 http://localhost:8080/h2-console
- 
-Running the Application
-Clone Repository
-git clone <repository-url>
-git clone https://github.com/DivyaSriKrishnakumar/vehicle-rental-management-system.git 
- 
-Build Project
+```
+
+---
+
+# Running The Application
+
+## Clone Repository
+
+```bash
+git clone https://github.com/DivyaSriKrishnakumar/vehicle-rental-management-system.git
+```
+
+---
+
+## Navigate Into Project
+
+```bash
+cd vehicle-rental-management-system
+```
+
+---
+
+## Build Project
+
+```bash
 mvn clean install
- 
-Run Application
+```
+
+---
+
+## Run Application
+
+```bash
 mvn spring-boot:run
- 
-Testing Tools
+```
+
+---
+
+# Testing Tools
+
 The project was tested using:
-Postman
-Swagger UI
-H2 Console
- 
- 
-Author
-Divya Sri Krishnakumar
+
+- Postman
+- Swagger UI
+- H2 Console
+
+---
+
+# Future Improvements
+
+- Refresh Token Support
+- Email Notifications
+- Vehicle Image Upload
+- Payment Gateway Integration
+- Booking Invoices
+- MySQL/PostgreSQL Migration
+- Docker Deployment
+- Unit Testing
+- Integration Testing
+- Redis Caching
+- Vehicle Search & Filtering
+
+---
+
+# Learning Outcomes
+
+This project demonstrates:
+
+- Spring Boot REST API Development
+- JWT Authentication
+- Spring Security
+- DTO Architecture
+- Exception Handling
+- Pagination
+- Booking Conflict Management
+- Role-Based Authorization
+- Swagger/OpenAPI Integration
+- Professional Backend Structure
+
+---
+
+# Author
+
+## Divya Sri Krishnakumar
+
 Backend project focused on enterprise-style Spring Boot REST API architecture and secure booking management.
+
