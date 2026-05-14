@@ -9,36 +9,38 @@ pipeline {
 
         stage('Clone') {
             steps {
-                echo 'Cloning repository...'
+                git 'https://github.com/DivyaSriKrishnakumar/vehicle-rental-management-system.git'
             }
         }
 
         stage('Build') {
             steps {
-                bat 'mvn clean compile'
-            }
-        }
-
-        stage('Test') {
-            steps {
-                bat 'mvn test'
-            }
-        }
-
-        stage('Package') {
-            steps {
                 bat 'mvn clean package'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                bat 'docker build -t vehiclerental-app .'
+            }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+                bat 'docker stop vehiclerental-container || exit 0'
+                bat 'docker rm vehiclerental-container || exit 0'
+                bat 'docker run -d --name vehiclerental-container -p 9090:8080 vehiclerental-app'
             }
         }
     }
 
     post {
         success {
-            echo 'Build completed successfully!'
+            echo 'CI/CD Pipeline executed successfully!'
         }
 
         failure {
-            echo 'Build failed!'
+            echo 'Pipeline failed!'
         }
     }
 }
