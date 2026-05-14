@@ -36,6 +36,11 @@ This project was designed as a portfolio-quality backend system following layere
 
 ---
 
+## Jenkins CI/CD Testing
+Updated Jenkins webhook testing
+
+---
+
 ## Vehicle Management
 
 - Add New Vehicles
@@ -598,39 +603,6 @@ The project was tested using:
 - Postman
 - Swagger UI
 - H2 Console
-
----
-
-# Future Improvements
-
-- Refresh Token Support
-- Email Notifications
-- Vehicle Image Upload
-- Payment Gateway Integration
-- Booking Invoices
-- MySQL/PostgreSQL Migration
-- Docker Deployment
-- Unit Testing
-- Integration Testing
-- Redis Caching
-- Vehicle Search & Filtering
-
----
-
-# Learning Outcomes
-
-This project demonstrates:
-
-- Spring Boot REST API Development
-- JWT Authentication
-- Spring Security
-- DTO Architecture
-- Exception Handling
-- Pagination
-- Booking Conflict Management
-- Role-Based Authorization
-- Swagger/OpenAPI Integration
-- Professional Backend Structure
 
 ---
 
