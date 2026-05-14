@@ -7,12 +7,6 @@ pipeline {
 
     stages {
 
-        stage('Clone') {
-            steps {
-                git 'https://github.com/DivyaSriKrishnakumar/vehicle-rental-management-system.git'
-            }
-        }
-
         stage('Build') {
             steps {
                 bat 'mvn clean package'
