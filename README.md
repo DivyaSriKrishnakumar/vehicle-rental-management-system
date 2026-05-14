@@ -603,7 +603,6 @@ The project was tested using:
 - Postman
 - Swagger UI
 - H2 Console
-- Jenkinspipeline
 
 ---
 
