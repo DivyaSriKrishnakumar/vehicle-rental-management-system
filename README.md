@@ -36,8 +36,17 @@ This project was designed as a portfolio-quality backend system following layere
 
 ---
 
-## Jenkins CI/CD Testing
-Updated Jenkins webhook testing
+# CI/CD Pipeline
+
+Technologies Used:
+- Jenkins
+- Docker
+- GitHub Webhooks
+- Maven
+- Spring Boot
+
+Pipeline Flow:
+GitHub Push → Jenkins Pipeline → Maven Build → Docker Build → Docker Deployment
 
 ---
 
@@ -603,7 +612,7 @@ The project was tested using:
 - Postman
 - Swagger UI
 - H2 Console
-- Jenkins_pipeline
+
 
 ---
 
